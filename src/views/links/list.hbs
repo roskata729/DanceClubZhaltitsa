@@ -1,0 +1,35 @@
+<div class="container p-4">
+    <div class="row">
+        
+        {{#each links}}
+            <div class="col-md-max center m-4">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <p class="card-title text-uppercase text-left font-weight-bold">
+                            {{Description}}
+                        </p>
+                        <div>
+                        <iframe class="embed-responsive-item" frameborder="0" width="1080px" height="640px" src="{{Url}}" allowfullscreen></iframe>
+                        </div>
+                        <p>
+                            Качен на {{ Created_at }}
+                        </p>
+                        {{#if ../isAdmin}}
+                        <a href="/links/edit/{{ID}}" class="btn btn-secondary">Промени</a>
+                        <a href="/links/delete/{{ID}}" class="btn btn-danger">Изтрий</a>
+                        {{/if}}
+                    </div>
+                </div>
+            </div>
+        {{else}}
+            <div class="col-md-4 mx-auto">
+                <div class="card card-body text-center">
+                    <p>Няма налични видео уроци</p>
+                    <a href="/links/add" class="btn btn-success">Добави видео урок</a>
+                </div>
+            </div>
+
+        {{/each}}
+
+    </div>
+</div>
