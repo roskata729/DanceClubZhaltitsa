@@ -1,10 +1,14 @@
 <div class="container p-4 lessons-column">
+    <div class="row text-center">
+        <div class="col-md-12">
+        <p class="card-title text-center">Събития</p>
+        </div>
+    </div>
     <div class="row">
   {{#each events}}
     {{#ifCond ../user.user_age '>=' AgeLimit}}
       <div class="col-md-4 mb-4">
         <div class="card">
-          <img src="../../public/img/events-icon.jpg" class="card-img-top" alt="{{Title}}">
           <div class="card-body">
             <p class="card-title text-uppercase text-center font-weight-bold">{{Title}}</p>
             <p class="card-text">{{Description}}</p>
