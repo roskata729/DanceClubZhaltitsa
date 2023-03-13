@@ -11,8 +11,11 @@ router.get('/', isLoggedIn, async (req, res) => {
       return event.AgeLimit <= req.user.user_age;
     }).map(event => {
       const isRegistered = event.participants && event.participants.includes(req.user.id);
+      const totalParticipants = event.participants ? JSON.parse(event.participants).length : 0;
+      event.totalParticipants = totalParticipants;
       return { ...event, isRegistered };
     });
+
     res.render('events/list', { events, isAdmin });
   });
 
