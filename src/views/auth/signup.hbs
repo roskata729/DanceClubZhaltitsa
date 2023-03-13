@@ -1,32 +1,62 @@
 <div class="container p-4">
-    <div class="row">
-        <div class="col-md-4 mx-auto">
-            <div class="card text-center">
-                <div class="card-header">
-                    <h3>Регистрация</h3>
-                </div>
-                <div class="card-body">
-                    <form action="/signup" method="POST">
-                        <div class="form-group">
-                            <input type="text" name="fullname" placeholder="Full name" class="form-control" required autofocus>
-                        </div>
-                        <div class="form-group">
-                            <input type="text" name="username" placeholder="Username" class="form-control" required>
-                        </div>
-                        <div class="form-group">
-                            <input type="password" name="password" placeholder="Password" class="form-control" required>
-                        </div>
-                        <div class="form-group" for="birth_date"><label>Дата на раждане</label>
-                            <input id="birth_date" type="date" name="birth_date" placeholder="birth_date" class="form-control" value="2000-01-01" required>
-                        </div>
-                        <div class="form-group">
-                            <button class="btn btn-success btn-block">
-                                Регистрирай се
-                            </button>
-                        </div>
-                    </form>
-                </div>
-            </div>
+  <div class="row">
+    <div class="col-md-6 mx-auto">
+      <div class="card">
+        <div class="card-header">
+          <h3 class="text-center mb-0">Регистрация</h3>
         </div>
+        <div class="card-body">
+          <form action="/signup" method="POST">
+            <div class="form-group mb-3">
+              <label for="username" class="form-label">Име на потребител</label>
+              <div class="input-group">
+                <input type="text" name="username" placeholder="Име на потребител" class="form-control" required id="username">
+              </div>
+              <small class="form-text text-muted" id="username-info"></small>
+            </div>
+            <div class="form-group mb-3">
+              <label for="fullname" class="form-label">Пълно име</label>
+              <input type="text" name="fullname" placeholder="Пълно име" class="form-control" required autofocus id="fullname">
+            </div>
+            <div class="form-group mb-3">
+              <label for="password" class="form-label">Парола</label>
+              <input type="password" name="password" placeholder="Парола" class="form-control" required id="password">
+            </div>
+            <div class="form-group mb-3">
+              <label for="birth_date" class="form-label">Дата на раждане</label>
+              <input id="birth_date" type="date" name="birth_date" placeholder="Дата на раждане" class="form-control" value="2000-01-01" required>
+            </div>
+            <div class="form-group text-center mb-0">
+              <button class="btn btn-success btn-lg w-100">
+                Регистрирай се
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
+  </div>
 </div>
+
+
+<script>
+    const usernameInput = document.getElementById('username');
+    const usernameInfo = document.getElementById('username-info');
+    const registerForm = document.querySelector('form[action="/signup"]');
+
+    registerForm.addEventListener('submit', async (event) => {
+        event.preventDefault();
+
+        const response = await fetch(`/check-username/${usernameInput.value}`);
+
+        if (response.ok) {
+            registerForm.submit();
+        } else {
+            usernameInput.style.borderColor = 'red';
+            usernameInput.style.animation = 'shake .5s';
+            usernameInput.style.animationIterationCount = 'infinite';
+            usernameInfo.innerText = 'Потребителското име е заето';
+        }
+    });
+
+</script>

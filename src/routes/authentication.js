@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const pool = require('../database');
 
 const passport = require('passport');
 const { isLoggedIn, isNotLoggedIn } = require('../lib/auth');
@@ -34,5 +35,20 @@ router.get('/logout', (req, res) => {
     req.logOut();
     res.redirect('/');
 });
+
+router.get('/check-username/:username', async (req, res) => {
+    try {
+      const data = await pool.query('SELECT id FROM users WHERE username = ?', [req.params.username]);
+  
+      if (data.length) {
+        res.status(400).send('Username already exists');
+      } else {
+        res.status(200).send('Username available');
+      }
+    } catch (error) {
+      console.log(error);
+      res.status(500).send('Error checking username availability');
+    }
+  });
 
 module.exports = router;
