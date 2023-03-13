@@ -1,23 +1,26 @@
 <div class="container p-4">
     <div class="row">
-        <div class="col-md-4 mx-auto">
+        <div class="col-md-6 mx-auto">
             <div class="card">
                 <div class="card-body">
                     <form action="/links/edit/{{link.ID}}" method="POST">
-                        <div class="form-group">
-                            <input type="text" class="form-control" name="Title" placeholder="Title" value="{{link.Title}}" autofocus>
+                        <div class="form-group row">
+                            <div class="col-sm-3 text-right"><label for="Title">Заглавие:</label></div>
+                            <div class="col-sm-9"><input type="text" class="form-control" name="Title" placeholder="Title" value="{{link.Title}}" autofocus></div>
                         </div>
-                        <div class="form-group">
-                            <input type="url" class="form-control" name="Url" placeholder="URL" value="{{link.Url}}">
+                        <hr>
+                        <div class="form-group row">
+                            <div class="col-sm-3 text-right"><label for="Url">Линк:</label></div>
+                            <div class="col-sm-9"><input type="url" class="form-control" name="Url" placeholder="URL" value="{{link.Url}}"></div>
                         </div>
-                        <div class="form-group">
-                            <textarea class="form-control" name="Description" rows="2"
-                                placeholder="Description">{{link.Description}}</textarea>
+                        <hr>
+                        <div class="form-group row">
+                            <div class="col-sm-3 text-right"><label for="Description">Описание:</label></div>
+                            <div class="col-sm-9"><textarea class="form-control" name="Description" rows="2" placeholder="Description">{{link.Description}}</textarea></div>
                         </div>
-                        <div class="form-group">
-                            <button class="btn btn-success btn-block">
-                                Save
-                            </button>
+                        <hr>
+                        <div class="form-group row mx-auto">
+                            <div class="col-sm-9 offset-sm-3"><button class="btn btn-success btn-block">Запази</button></div>
                         </div>
                     </form>
                 </div>

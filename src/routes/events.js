@@ -11,7 +11,7 @@ router.get('/', isLoggedIn, async (req, res) => {
     const events = allEvents.filter(event => {
       return event.AgeLimit <= req.user.user_age;
     }).map(event => {
-      const participants = event.participants ? JSON.parse(event.participants) : [];
+      const participants = event.participants ? (Array.isArray(event.participants) ? event.participants : JSON.parse(event.participants)) : [];
       event.isRegistered = participants.some(p => p.user_id === req.user.id);
       const totalParticipants = event.participants ? JSON.parse(event.participants).length : 0;
       event.totalParticipants = totalParticipants;
@@ -42,29 +42,34 @@ router.post('/add', isAdministrator, async (req, res) => {
 });
 
 router.get('/edit/:ID', isLoggedIn, async(req, res) => {
-    const { ID } = req.params;
-    const event = await pool.query('SELECT * FROM events WHERE ID = ?', [ID]);
-    if (event && event.length > 0) {
-        event[0].Date = event[0].Date.toISOString().slice(0,10);
-        res.render('events/edit', {event: event[0]});
-    } else {
-        req.flash('message', 'Нещо се обърка при зареждането на събитието.')
-        res.redirect('/events');
-    }
+  const { ID } = req.params;
+  const event = await pool.query('SELECT * FROM events WHERE ID = ?', [ID]);
+
+  if (event && event.length > 0) {
+      event[0].participantsArray = JSON.parse(event[0].participants || "[]"); 
+      event[0].Date = event[0].Date.toISOString().slice(0,10);
+
+      res.render('events/edit', {event: event[0]});
+  } else {
+      req.flash('message', 'Нещо се обърка при зареждането на събитието.')
+      res.redirect('/events');
+  }
 });
 
-router.post('/edit/:ID', isLoggedIn, async(req, res) => {
-    const { ID } = req.params;
-    const { Title, Date, AgeLimit,  Description } = req.body;
-    const editedEvent = {
-        Title,
-        Date,
-        AgeLimit,
-        Description
-    };
-    await pool.query('UPDATE events SET ? WHERE ID = ?', [editedEvent, ID]);
-    req.flash('success', 'Събитието беше обновено успешно');
-    res.redirect('/events');
+router.post('/edit/:ID', isLoggedIn, async (req, res) => {
+  const { ID } = req.params;
+  const { Title, Date, AgeLimit, Description } = req.body;
+
+  const editedEvent = {
+    Title,
+    Date,
+    AgeLimit,
+    Description
+  };
+
+  await pool.query('UPDATE events SET ? WHERE ID = ?', [editedEvent, ID]);
+  req.flash('success', 'Събитието беше обновено успешно');
+  res.redirect('/events');
 });
 
 router.post('/registerToEvent/:ID', isLoggedIn, async(req, res) => {
