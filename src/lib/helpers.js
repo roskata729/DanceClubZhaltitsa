@@ -1,4 +1,5 @@
 const bcrypt = require('bcryptjs');
+const pool = require('../database');
 
 const helpers = {};
 
@@ -25,6 +26,13 @@ helpers.calculateAge = async (birthday) => {
     age--;
     }
     return age;
+}
+
+helpers.removeParticipant = async (eventId, userId) => {
+    const event = await pool.query('SELECT * FROM events WHERE ID = ?', [eventId]);
+    const participants = JSON.parse(event[0].participants);
+    const updatedParticipants = participants.filter(participant => participant.user_id !== userId);
+    await pool.query('UPDATE events SET participants = ? WHERE ID = ?', [JSON.stringify(updatedParticipants), eventId]);
 }
 
 module.exports = helpers;
