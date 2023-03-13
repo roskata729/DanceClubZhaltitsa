@@ -17,20 +17,20 @@ router.post('/add', isLoggedIn, async (req, res) => {
         Description
     };
     await pool.query('INSERT INTO links SET ?', [newLink]);
-    req.flash('success', 'Link saved successfully');
+    req.flash('success', 'Видеото беше добавено успешно');
     res.redirect('/links');
 });
 
-router.get('/', isLoggedIn, async(req, res) => {
-    const links = await pool.query('SELECT * FROM links');
+router.get('/', isLoggedIn, async (req, res) => {
+    const links = await pool.query('SELECT *, DATE_FORMAT(Created_At, "%Y-%m-%d %H:%i:%s") as formattedDate FROM links');
     const isAdmin = req.user.is_admin;
-    res.render('links/list', {links, isAdmin});
-});
+    res.render('links/list', { links, isAdmin });
+  });
 
 router.get('/delete/:ID', isLoggedIn, async(req, res) => {
     const { ID } = req.params;
     await pool.query('DELETE FROM links WHERE ID = ?', [ID]);
-    req.flash('success', 'Link removed successfully');
+    req.flash('success', 'Видеото беше премахнат успешно');
     res.redirect('/links');
 });
 
@@ -49,7 +49,7 @@ router.post('/edit/:ID', isLoggedIn, async(req, res) => {
         Url
     };
     await pool.query('UPDATE links SET ? WHERE ID = ?', [editedLink, ID]);
-    req.flash('success', 'Link updated successfully');
+    req.flash('success', 'Видеото беше обновено успешно');
     res.redirect('/links');
 });
 

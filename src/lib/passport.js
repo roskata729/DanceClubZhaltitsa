@@ -4,23 +4,6 @@ const LocalStrategy = require('passport-local').Strategy;
 const pool = require('../database');
 const helpers = require('../lib/helpers');
 
-const {Logging} = require('@google-cloud/logging');
-
-const logging = new Logging();
-const log = logging.log('my-log');
-
-const metadata = {
-  resource: {
-    type: 'global',
-  },
-};
-
-// Write a critical log entry
-log.write('This is a critical message!', {severity: 'CRITICAL', metadata});
-
-// Write a warning log entry
-log.write('This is a warning message!', {severity: 'WARNING', metadata});
-
 passport.use('local.signin', new LocalStrategy({
     usernameField: 'username',
     passwordField: 'password',
@@ -28,10 +11,10 @@ passport.use('local.signin', new LocalStrategy({
 }, async (req, username, password, done) => {
     const rows = await pool.query('SELECT * FROM users WHERE username = ?', [username]);
     if (rows.length > 0) {
-        const user = rows[0];
-        const ValidPassword = await helpers.matchPassword(password, user.password);
+        const localUser = rows[0];
+        const ValidPassword = await helpers.matchPassword(password, localUser.password);
         if (ValidPassword) {
-            done(null, user, req.flash('success', 'Добре дошли  ' + user.username));
+            done(null, localUser, req.flash('success', 'Добре дошли  ' + localUser.username));
         } else {
             done(null, false, req.flash('message', 'Грешна парола'));
         }
@@ -65,5 +48,7 @@ passport.serializeUser((user, done) => {
 
 passport.deserializeUser(async (id, done) => {
     const rows = await pool.query('SELECT * FROM users WHERE id = ?', [id]);
-    done(null, rows[0]);
+    const user = rows[0];
+    user.user_age = await helpers.calculateAge(user.birth_date);
+    done(null, user);
 });

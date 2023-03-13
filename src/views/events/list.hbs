@@ -1,35 +1,47 @@
 <div class="container p-4">
     <div class="row">
-        
         {{#each events}}
+        {{#ifCond ../user.user_age '>=' AgeLimit}}
             <div class="col-md-max center m-4">
                 <div class="card text-center">
                     <div class="card-body">
-                        <p class="card-title text-uppercase text-left font-weight-bold">
+                        <p class="card-title text-uppercase text-center font-weight-bold">
+                            {{Title}}
+                        </p>
+                        <img src="../../public/img/events-icon.jpg" class="card-img-top" alt="{{Title}}">
+                        <p class="card-body text-left">
                             {{Description}}
                         </p>
-                        <div>
-                        <iframe class="embed-responsive-item" frameborder="0" width="1080px" height="640px" src="{{Url}}" allowfullscreen></iframe>
-                        </div>
                         <p>
-                            Качен на {{ Created_at }}
+                            Дата: {{ formattedDate }}
                         </p>
+                        {{totalParticipants}}
+                        {{#if isRegistered}}
+                        <button disabled>Вече сте регистриран</button>
+                        {{else}}
+                        <form action="/events/registerToEvent/{{ID}}" method="POST">
+                            <input type="hidden" name="eventID" value="{{ID}}">
+                            <button type="submit">Регистрирай се</button>
+                        </form>
+                        {{/if}}
                         {{#if ../isAdmin}}
-                        <a href="/links/edit/{{ID}}" class="btn btn-secondary">Промени</a>
-                        <a href="/links/delete/{{ID}}" class="btn btn-danger">Изтрий</a>
+                        <a href="/events/edit/{{ID}}" class="btn btn-primary">Промени</a>
+                        <a href="/events/delete/{{ID}}" class="btn btn-danger">Изтрий</a>
                         {{/if}}
                     </div>
                 </div>
             </div>
-        {{else}}
-            <div class="col-md-4 mx-auto">
-                <div class="card card-body text-center">
-                    <p>Няма налични видео уроци</p>
-                    <a href="/links/add" class="btn btn-success">Добави видео урок</a>
-                </div>
+    {{/ifCond}}
+    {{/each}}
+    {{#unless events.length}}
+        <div class="col-md-10 mx-auto card-title">
+            <div class="card card-body text-center">
+                <p>Няма налични събития</p>
+                {{#if user.is_admin}}
+                <a href="/events/add" class="btn btn-success">Добави събитие</a>
+                {{/if}}
             </div>
-
-        {{/each}}
-
+        </div>
+    {{/unless}}
     </div>
 </div>
