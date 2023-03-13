@@ -14,11 +14,11 @@
             <hr>
             {{#if isRegistered}}
             <form method="POST" action="/events/signOff/{{ID}}">
-                <button type="submit" class="btn btn-danger btn-block">Откажи регистрация</button>
+                <button type="submit" class="btn btn-danger btn-block">Откажи участие</button>
             </form>
             {{else}}
             <form method="POST" action="/events/registerToEvent/{{ID}}">
-                <button type="submit" class="btn btn-primary btn-block">Регистрирай се</button>
+                <button type="submit" class="btn btn-primary btn-block">Заяви участие</button>
             </form>
             {{/if}}
             {{#if ../isAdmin}}
