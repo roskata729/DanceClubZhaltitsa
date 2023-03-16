@@ -8,15 +8,15 @@
         <div class="card-body">
           <form action="/signup" method="POST">
             <div class="form-group mb-3">
-              <label for="username" class="form-label">Име на потребител</label>
+              <label for="username" class="form-label">Потребителско име</label>
               <div class="input-group">
-                <input type="text" name="username" placeholder="Име на потребител" class="form-control" required id="username">
+                <input type="text" name="username" placeholder="Потребителско име" class="form-control" autofocus required id="username">
               </div>
               <small class="form-text text-muted" id="username-info"></small>
             </div>
             <div class="form-group mb-3">
               <label for="fullname" class="form-label">Пълно име</label>
-              <input type="text" name="fullname" placeholder="Пълно име" class="form-control" required autofocus id="fullname">
+              <input type="text" name="fullname" placeholder="Пълно име" class="form-control" required id="fullname">
             </div>
             <div class="form-group mb-3">
               <label for="password" class="form-label">Парола</label>
@@ -37,26 +37,3 @@
     </div>
   </div>
 </div>
-
-
-<script>
-    const usernameInput = document.getElementById('username');
-    const usernameInfo = document.getElementById('username-info');
-    const registerForm = document.querySelector('form[action="/signup"]');
-
-    registerForm.addEventListener('submit', async (event) => {
-        event.preventDefault();
-
-        const response = await fetch(`/check-username/${usernameInput.value}`);
-
-        if (response.ok) {
-            registerForm.submit();
-        } else {
-            usernameInput.style.borderColor = 'red';
-            usernameInput.style.animation = 'shake .5s';
-            usernameInput.style.animationIterationCount = 'infinite';
-            usernameInfo.innerText = 'Потребителското име е заето';
-        }
-    });
-
-</script>
