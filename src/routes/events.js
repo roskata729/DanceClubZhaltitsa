@@ -23,8 +23,9 @@ router.get('/', isLoggedIn, async (req, res) => {
   });
 
 
-router.get('/add', isAdministrator, (req, res) => {
-    res.render('events/add');
+router.get('/add', isAdministrator, async (req, res) => {
+    const futureDates = await helpers.getFutureDates();
+    res.render('events/add', { futureDates });
 });
 
 router.post('/add', isAdministrator, async (req, res) => {
@@ -44,12 +45,13 @@ router.post('/add', isAdministrator, async (req, res) => {
 router.get('/edit/:ID', isLoggedIn, async(req, res) => {
   const { ID } = req.params;
   const event = await pool.query('SELECT * FROM events WHERE ID = ?', [ID]);
+  const futureDates = await helpers.getFutureDates();
 
   if (event && event.length > 0) {
       event[0].participantsArray = JSON.parse(event[0].participants || "[]"); 
       event[0].Date = event[0].Date.toISOString().slice(0,10);
 
-      res.render('events/edit', {event: event[0]});
+      res.render('events/edit', {event: event[0], futureDates: futureDates});
   } else {
       req.flash('message', 'Нещо се обърка при зареждането на събитието.')
       res.redirect('/events');
