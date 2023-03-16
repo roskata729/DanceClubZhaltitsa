@@ -11,7 +11,14 @@
         <div class="card-body">
             <h3>{{link.Title}}</h3>
         <p>{{link.Description}}</p>
+        <div class="row mt-3">
+        <div class="col-6">
             <p>Качен на {{ link.formattedDate }}</p>
+            </div>
+            <div class="col-6">
+            <a href="/links" class="btn btn-primary float-right">Назад</a>
+            </div>
+            </div>
             {{#if isAdmin}}
             <div class="row mt-3">
             <div class="col-6">
@@ -25,5 +32,5 @@
         </div>
         </div>
     </div>
-    </div>
+</div>
 

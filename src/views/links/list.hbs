@@ -1,42 +1,50 @@
 <div class="container p-4 lessons-column">
     <div class="row text-center">
         <div class="col-md-12">
-        <p class="card-title text-center">Видео уроци</p>
+            <p class="card-title text-center">Видео уроци</p>
         </div>
     </div>
     <hr>
-  <div class="row row-cols-1 row-cols-md-4 g-4">
-    {{#each links}}
-<div class="col-md-4 center">
-    <div class="card text-center">
-        <div class="card-body">
-            <p class="card-title text-uppercase text-center font-weight-bold"><a href="/links/view/{{ID}}">{{Title}}</a></p>
-            <div>
-                <iframe class="embed-responsive-item" frameborder="0" width="100%" height="auto" src="{{Url}}" allowfullscreen></iframe>
+    <div class="row">
+        <div class="col-md-4 mx-auto mb-3">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Търсене по заглавие" id="search-input">
+                <button class="btn btn-primary" id="search-button">Търсене</button>
             </div>
-            <p>{{Description}}</p>
-            <p>Качен на {{ formattedDate }}</p>
-            {{#if ../isAdmin}}
-            <div class="row mt-3">
-                <div class="col-6">
-                    <a href="/links/edit/{{ID}}" class="btn btn-secondary btn-block">Промени</a>
-                </div>
-                <div class="col-6">
-                    <a href="/links/delete/{{ID}}" class="btn btn-danger btn-block">Изтрий</a>
-                </div>
-            </div>
-            {{/if}}
         </div>
     </div>
-</div>
-{{else}}
-<div class="col-md-4 mx-auto">
-    <div class="card card-body text-center">
-        <p class="card-title">Няма налични видео уроци</p>
-        <a href="/links/add" class="btn btn-success">Добави видео урок</a>
+    <div class="row row-cols-1 row-cols-md-4 g-4" id="video-list">
+        {{#each links}}
+            <div class="col-md-4 center video-item">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <p class="card-title text-uppercase text-center font-weight-bold"><a href="/links/view/{{ID}}">{{Title}}</a></p>
+                        <div>
+                            <iframe class="embed-responsive-item" frameborder="0" width="100%" height="auto" src="{{Url}}" allowfullscreen></iframe>
+                        </div>
+                        <p>{{Description}}</p>
+                        <p>Качен на {{ formattedDate }}</p>
+                        {{#if ../isAdmin}}
+                            <div class="row mt-3">
+                                <div class="col-6">
+                                    <a href="/links/edit/{{ID}}" class="btn btn-secondary btn-block">Промени</a>
+                                </div>
+                                <div class="col-6">
+                                    <a href="/links/delete/{{ID}}" class="btn btn-danger btn-block">Изтрий</a>
+                                </div>
+                            </div>
+                        {{/if}}
+                    </div>
+                </div>
+            </div>
+        {{else}}
+            <div class="col-md-4 mx-auto">
+                <div class="card card-body text-center">
+                    <p class="card-title">Няма налични видео уроци</p>
+                    <a href="/links/add" class="btn btn-success">Добави видео урок</a>
+                </div>
+            </div>
+        {{/each}}
+        <div class="no-results-message hide">Няма намерени резултати</div>
     </div>
-</div>
-{{/each}}
-
-  </div>
 </div>
