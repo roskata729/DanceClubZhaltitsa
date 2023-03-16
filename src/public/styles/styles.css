@@ -85,3 +85,14 @@ body {
 .lessons-column {
     border: 2px solid #ddd;
 }
+a {
+    color: #333;
+    font-size: 18px;
+    text-decoration: none;
+    transition: color 0.2s ease-in-out;
+}
+
+a:hover {
+color: #0088cc;
+text-decoration: underline;
+} 

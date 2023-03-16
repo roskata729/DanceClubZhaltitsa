@@ -1,0 +1,29 @@
+<div class="container p-4 lessons-column">
+    <div class="row">
+    <div class="col-md-12">
+        <div class="embed-responsive embed-responsive-16by9">
+        <iframe class="embed-responsive-item" frameborder="0" width="100%" height="auto" src="{{link.Url}}" allowfullscreen></iframe>
+        </div>
+        
+    </div>
+    <div class="col-md-12">
+        <div class="card">
+        <div class="card-body">
+            <h3>{{link.Title}}</h3>
+        <p>{{link.Description}}</p>
+            <p>Качен на {{ link.formattedDate }}</p>
+            {{#if isAdmin}}
+            <div class="row mt-3">
+            <div class="col-6">
+                <a href="/links/edit/{{ID}}" class="btn btn-secondary btn-block">Промени</a>
+            </div>
+            <div class="col-6">
+                <a href="/links/delete/{{ID}}" class="btn btn-danger btn-block">Изтрий</a>
+            </div>
+            </div>
+            {{/if}}
+        </div>
+        </div>
+    </div>
+    </div>
+

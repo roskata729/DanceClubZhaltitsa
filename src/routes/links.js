@@ -27,20 +27,26 @@ router.get('/', isLoggedIn, async (req, res) => {
     res.render('links/list', { links, isAdmin });
   });
 
-router.get('/delete/:ID', isLoggedIn, async(req, res) => {
+router.get('/view/:ID', isLoggedIn, async (req, res) => {
+const { ID } = req.params;
+const link = await pool.query('SELECT *, DATE_FORMAT(Created_At, "%Y-%m-%d %H:%i:%s") as formattedDate FROM links WHERE ID = ?', [ID]);
+res.render('links/view', { link: link[0], isAdmin: req.user.is_admin });
+});
+
+router.get('/delete/:ID', isAdministrator, async(req, res) => {
     const { ID } = req.params;
     await pool.query('DELETE FROM links WHERE ID = ?', [ID]);
     req.flash('success', 'Видеото беше премахнат успешно');
     res.redirect('/links');
 });
 
-router.get('/edit/:ID', isLoggedIn, async(req, res) => {
+router.get('/edit/:ID', isAdministrator, async(req, res) => {
     const { ID } = req.params;
     const link = await pool.query('SELECT * FROM links WHERE ID = ?', [ID]);
     res.render('links/edit', {link: link[0]});
 });
 
-router.post('/edit/:ID', isLoggedIn, async(req, res) => {
+router.post('/edit/:ID', isAdministrator, async(req, res) => {
     const { ID } = req.params;
     const { Title, Description, Url } = req.body;
     const editedLink = {
