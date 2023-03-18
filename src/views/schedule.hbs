@@ -1,0 +1,40 @@
+<div class="container">
+<h1 class="text-center">График на тренировките</h1>
+{{#each months}}
+<hr>
+  <h2 class="text-center">{{@key}}</h2>
+  {{#each this}}
+  <hr>
+    <h3>{{@key}}</h3>
+    <hr>
+    {{#each this}}
+      <table class="text-center">
+        <thead>
+          <tr class="text-center p-4">
+            {{#each ../../../weekNames}}
+            <th class="col-3">{{this}}</th>
+            {{/each}}
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            {{#each days}}
+              <td class="cardTraining text-center">
+                {{#if this}}
+                  
+                    <p>Група: {{group}}</p>
+                    <p>{{date}}</p>
+                    {{#if participants}}
+                      <p>{{participants.length}}Присъстващи: participants</p>
+                    {{/if}}
+                 
+                {{/if}}
+              </td>
+            {{/each}}
+          </tr>
+        </tbody>
+      </table>
+    {{/each}}
+  {{/each}}
+{{/each}}
+</div>
