@@ -7,6 +7,8 @@ const session = require('express-session');
 const mysqlstore = require('express-mysql-session');
 const passport = require('passport');
 const handlebars = require('handlebars');
+const helpers = require('handlebars-helpers')();
+handlebars.registerHelper(helpers);
 
 const { database } = require('./keys');
 
@@ -86,3 +88,15 @@ handlebars.registerHelper('ifCond', function(v1, operator, v2, options) {
         return options.inverse(this);
     }
   });
+handlebars.registerHelper('times', function(n, block) {
+  let accum = '';
+  for(let i = 0; i < n; ++i) {
+    accum += block.fn(i);
+  }
+  return accum;
+});
+
+handlebars.registerHelper('json', function(context) {
+  return JSON.stringify(context);
+});
+

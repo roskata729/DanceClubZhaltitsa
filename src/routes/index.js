@@ -9,13 +9,13 @@ router.get('/', (req, res) => {
 });
 
 router.get('/schedule', isLoggedIn, (req, res) => {
-    const sql = 'SELECT id, group_id, date FROM trainings';
+    const sql = 'SELECT id, group_id, date, participants_ids FROM trainings';
     pool.query(sql, (error, results) => {
       if (error) throw error;
-      const trainingDates = results.map(({ id, group_id, date }) => ({
+      const trainingDates = results.map(({ id, group_id, date, participants_ids }) => ({
         id,
         group: group_id,
-        date: new Date(date).getTime(),
+        date: new Date(date).getTime()
       }));
       trainingDates.sort((a, b) => a.date - b.date);
   
@@ -47,18 +47,56 @@ router.get('/schedule', isLoggedIn, (req, res) => {
           months[year][month][weekIndex] = week;
         }
   
+        // Add an object for each day of the week
+        const day = date.getDay();
+        const daysInWeek = 7;
+        const daysToAdd = daysInWeek - week.days.length;
+        for (let i = 0; i < daysToAdd; i++) {
+          week.days.push({
+            id: null,
+            group: null,
+            date: null,
+            participants: []
+          });
+        }
+  
         // Add the training date to the week object
-        week.days.push({
+        const trainingDayIndex = day - 1; // 0-based index
+        week.days[trainingDayIndex] = {
           id: trainingDate.id,
           group: trainingDate.group,
           date: date.toLocaleDateString(),
           participants: trainingDate.participants || []
-        });
+        };
       });
 
-      res.render('schedule', { months, monthNames, weekNames });
+      res.render('schedule', { months, monthNames, weekNames, isAdmin : req.user.is_admin });
     });
-  });
+});
+
+router.post('/trainings/addparticipant/:ID', isAdministrator, async (req, res) => {
+  const { ID } = req.params;
+  const { participant_id } = req.body;
+
+  const [training] = await pool.query('SELECT participants_ids FROM trainings WHERE ID = ?', [ID]);
+  const participantsIdsArray = JSON.parse(training.participants_ids || '[]');
+
+  if(participantsIdsArray.includes(participant_id)){
+    req.flash('message', 'Този клиент вече присъства. Моля изберете друг!');
+    return res.redirect('/schedule');
+  }
+  participantsIdsArray.push(participant_id);
+
+  const updatedTraining = {
+    participants_ids: JSON.stringify(participantsIdsArray)
+  };
+
+  await pool.query('UPDATE trainings SET ? WHERE ID = ?', [updatedTraining, ID]);
+  req.flash('success', 'Присъствието беше отразено успешно');
+  res.redirect('/schedule');
+});
+
+
 
 function getWeekNumber(date) {
     const firstDayOfYear = new Date(date.getFullYear(), 0, 1);

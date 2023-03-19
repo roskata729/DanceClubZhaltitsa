@@ -56,18 +56,19 @@ helpers.saveTrainingsInDatabase = async () => {
     // Generate training dates for the past 6 months
     const end = new Date(); // end at today
     const start = new Date(end.getFullYear(), end.getMonth() - 6, 1); // start 6 months ago (on the 1st day of the month)
-    const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-    const group1Days = [days.indexOf('Monday'), days.indexOf('Thursday')]; // Group 1 trainings on Monday and Thursday
-    const group2Days = [days.indexOf('Tuesday'), days.indexOf('Friday')]; // Group 2 trainings on Tuesday and Friday
+    const group1Days = [2, 5]; // Group 1 trainings on Monday and Thursday (0 = Sunday, 1 = Monday, etc.)
+    const group2Days = [3, 6]; // Group 2 trainings on Tuesday and Friday
     const trainingDates = [];
-
+  
     for (let d = start; d <= end; d.setDate(d.getDate() + 1)) {
-    const date = d.toISOString().slice(0, 10); // format date as YYYY-MM-DD
-    if (group1Days.includes(d.getDay())) {
+      const dayOfWeek = d.getDay();
+      if (group1Days.includes(dayOfWeek)) {
+        const date = d.toISOString().slice(0, 10); // format date as YYYY-MM-DD
         trainingDates.push({ group: 1, date });
-    } else if (group2Days.includes(d.getDay())) {
+      } else if (group2Days.includes(dayOfWeek)) {
+        const date = d.toISOString().slice(0, 10); // format date as YYYY-MM-DD
         trainingDates.push({ group: 2, date });
-    }
+      }
     }
 
     // Insert training dates into database
@@ -75,8 +76,8 @@ helpers.saveTrainingsInDatabase = async () => {
     const values = trainingDates.map(({ group, date }) => [group, date]);
 
     pool.query(sql, [values], (error, results) => {
-    if (error) throw error;
-        console.log(`Inserted ${results.affectedRows} rows into trainings table.`);
+      if (error) throw error;
+      console.log(`Inserted ${results.affectedRows} rows into trainings table.`);
     });
 }
 

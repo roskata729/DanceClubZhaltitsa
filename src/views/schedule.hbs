@@ -1,40 +1,90 @@
 <div class="container">
-<h1 class="text-center">График на тренировките</h1>
-{{#each months}}
-<hr>
-  <h2 class="text-center">{{@key}}</h2>
-  {{#each this}}
-  <hr>
-    <h3>{{@key}}</h3>
+  <h1 class="text-center">График на тренировките</h1>
+  {{#each months}}
     <hr>
+    <h2 class="text-center">{{@key}}</h2>
     {{#each this}}
-      <table class="text-center">
-        <thead>
-          <tr class="text-center p-4">
-            {{#each ../../../weekNames}}
-            <th class="col-3">{{this}}</th>
-            {{/each}}
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            {{#each days}}
-              <td class="cardTraining text-center">
-                {{#if this}}
-                  
-                    <p>Група: {{group}}</p>
-                    <p>{{date}}</p>
-                    {{#if participants}}
-                      <p>{{participants.length}}Присъстващи: participants</p>
+      <hr>
+      <h3>{{@key}}</h3>
+      <hr>
+      {{#each this}}
+        <table class="text-center">
+          <thead>
+            <tr class="text-center p-4">
+              {{#each ../../../weekNames}}
+                <th class="col-2">{{this}}</th>
+              {{/each}}
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              {{#each days}}
+                <td class="cardTraining text-center">
+                  {{#if this}}
+                    {{#if group}}
+                    {{#if ../../../../isAdmin}}
+                      <div class="trainingInformation"><p>Тренировка ID: {{id}}</p>
+                      {{/if}}
+                      <p>Група: {{group}}</p> 
+                      <p>Дата: {{this.date}}</p>
+                      {{#if participants}}
+                        <p> Присъстващи: {{participants.length}}</p>
+                      {{/if}}
+                      </div>
+                      {{#if ../../../../isAdmin}}
+                        <button class="btn btn-primary btn-block add-participant-button">
+                          Добави присъстващ
+                        </button>
+
+                        <div id="add-participant-popup" class="popup-form" style="display: none;">
+                          <h3>Добави присъстващ</h3>
+                          <form action="/trainings/addparticipant/{{id}}" method="POST">
+                            <label for="participant_id">Потребителско име</label>
+                            <input type="text" id="participant_id" name="participant_id" autofocus>
+
+                            <!-- Other form fields here -->
+                            
+                            <div class="button-container">
+                              <button type="submit" class="btn btn-primary">Добави</button>
+                              <button type="button" class="btn btn-danger cancel-button">Откажи</button>
+                            </div>
+                          </form>
+                        </div>
+                      {{/if}}
                     {{/if}}
-                 
-                {{/if}}
-              </td>
-            {{/each}}
-          </tr>
-        </tbody>
-      </table>
+                  {{/if}}
+                </td>
+              {{/each}}
+            </tr>
+          </tbody>
+        </table>
+      {{/each}}
     {{/each}}
   {{/each}}
-{{/each}}
-</div>
+
+  <script>
+    const addParticipantButtons = document.querySelectorAll('.add-participant-button');
+    const addParticipantPopups = document.querySelectorAll('.popup-form');
+    const participantIdInputs = document.querySelectorAll('#participant_id');
+    const cancelButtons = document.querySelectorAll('.cancel-button');
+    const trainingElements = document.querySelectorAll('.trainingInformation');
+
+    addParticipantButtons.forEach((addParticipantButton, index) => {
+      addParticipantButton.addEventListener('click', () => {
+        trainingElements[index].style.display = 'none';
+        addParticipantButtons[index].style.display = 'none';
+
+        // Show the popup form
+        addParticipantPopups[index].style.display = 'block';
+      });
+    });
+
+    cancelButtons.forEach((cancelButton, index) => {
+      cancelButton.addEventListener('click', () => {
+        // Hide the popup form
+        addParticipantPopups[index].style.display = 'none';
+        trainingElements[index].style.display = 'block';
+        addParticipantButtons[index].style.display = 'block';
+      });
+    });
+  </script>
