@@ -36,7 +36,7 @@ res.render('links/view', { link: link[0], isAdmin: req.user.is_admin });
 router.get('/delete/:ID', isAdministrator, async(req, res) => {
     const { ID } = req.params;
     await pool.query('DELETE FROM links WHERE ID = ?', [ID]);
-    req.flash('success', 'Видеото беше премахнат успешно');
+    req.flash('success', 'Видеото беше премахнато успешно');
     res.redirect('/links');
 });
 

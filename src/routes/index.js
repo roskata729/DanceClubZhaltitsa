@@ -96,6 +96,10 @@ router.post('/trainings/addparticipant/:ID', isAdministrator, async (req, res) =
   res.redirect('/schedule');
 });
 
+router.get('/payments', (req, res) => {
+  res.render('payments');
+});
+
 
 
 function getWeekNumber(date) {

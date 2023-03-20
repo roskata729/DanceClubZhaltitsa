@@ -1,0 +1,75 @@
+<div class="container">
+    <div class="payment-form mt-5">
+    <div class="payment-form__item payment-form__item--single-training zoom_element">
+        <h2 class="payment-form__item__title text-center">Плащане за единична тренировка</h2>
+        <hr>
+        <form>
+        <div class="payment-form__item__field row">
+            <label for="training-date" class="col">Training Date:</label>
+            <select id="training-date" name="training-date" class="col">
+            <option value="2022-04-01">April 1, 2022</option>
+            <option value="2022-04-02">April 2, 2022</option>
+            <option value="2022-04-03">April 3, 2022</option>
+            </select>
+        </div>
+        <div class="payment-form__item__field row">
+            <label for="cardholder-name" class="col">Име на картодържателя:</label>
+            <input type="text" id="cardholder-name" name="cardholder-name" class="col">
+        </div>
+        <div class="payment-form__item__field row">
+            <label for="card-number" class="col">Номер на карта:</label>
+            <input type="text" id="card-number" name="card-number" class="col">
+        </div>
+        <div class="payment-form__item__field row">
+            <label for="expiration-date" class="col">Валидност:</label>
+            <input type="text" id="expiration-date" name="expiration-date" class="col">
+        </div>
+        <div class="payment-form__item__field row">
+            <label for="cvv-code" class="col">CVV код:</label>
+            <input type="text" id="cvv-code" name="cvv-code" class="col">
+        </div>
+        <div class="text-center">
+        <button class="payment-form__item__button" type="submit" class="btn btn-success btn-block">Потвърди поръчка</button>
+        </div>
+        </form>
+    </div>
+    <div class="payment-form__item payment-form__item--monthly-card zoom_element">
+        <h2 class="payment-form__item__title text-center">Плащане за месечна карта</h2>
+        <hr>
+    <form>
+        <div class="payment-form__item__field row">
+            <label for="cardholder-name-monthly" class="col">Име на картодържателя:</label>
+            <input type="text" id="cardholder-name-monthly" name="cardholder-name-monthly" class="col"> 
+        </div>
+    <div class="payment-form__item__field row">
+        <label for="card-number-monthly" class="col">Номер на карта:</label>
+        <input type="text" id="card-number-monthly" name="card-number-monthly" class="col">
+    </div>
+    <div class="payment-form__item__field row">
+        <label for="expiration-date-monthly" class="col">Валидност:</label>
+        <input type="text" id="expiration-date-monthly" name="expiration-date-monthly" class="col">
+    </div>
+    <div class="payment-form__item__field row">
+        <label for="cvv-code-monthly" class="col">CVV код:</label>
+        <input type="text" id="cvv-code-monthly" name="cvv-code-monthly" class="col">
+    </div>
+    <div class="payment-form__item__total row" style="margin-top: 50px;">
+        <button class="payment-form__item__button text-center col" type="submit">Потвърди поръчка</button>
+        <label for="monthly-total" class="col">Сума за плащане: 50 лв</label>
+    </div>
+    </form>
+    </div>
+    <div class="payment-form__item payment-form_item--multisport-card text-center zoom_element">
+        <h2 class="payment-form__item__title">Използване на Multisport карта</h2>
+        <hr>
+        <form style="margin-top: 250px;" id="payment-form_item--multisport-card">
+        <div class="text-center">
+        <button class="payment-form__item__button" type="submit">Използвай Multisport карта</button>
+        </div>
+        </form>
+    </div>
+    </div>
+</div>
+
+<script src="/js/payments.js"></script>
+

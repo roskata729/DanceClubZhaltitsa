@@ -16,3 +16,8 @@ registerForm.addEventListener('submit', async (event) => {
         usernameInfo.innerText = 'Потребителското име е заето';
     }
 });
+
+usernameInput.addEventListener('change', async (event) => {
+        usernameInput.style.borderColor = 'grey';
+        usernameInfo.innerText = '';
+});

@@ -47,6 +47,7 @@ body {
     border: none;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     margin-top: 20px;
+    transition: transform .2s;
 }
 .cardTraining {
     border: none;
@@ -98,7 +99,7 @@ a {
 
 a:hover {
 color: #0088cc;
-text-decoration: underline;
+text-decoration: none;
 } 
 
 .fadein {
@@ -167,4 +168,67 @@ transition: all 0.3s ease;
 
 button:hover {
 background-color: #2E8B57;
+}
+
+.payment-form {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 20px;
+  }
+
+  .payment-form__item {
+  padding: 40px;
+  transition: transform .2s;
+}
+
+.payment-form__item {
+  border: 1px solid black;
+  border-radius: 20%;
+}
+
+.payment-form__item--multisport-card {
+  border-left: 1px solid black;
+  border-radius: 50%;
+}
+
+.payment-form__item--multisport-card {
+border-left: none;
+}
+
+.payment-form__item--total {
+border: none;
+}
+
+.payment-form__item__title {
+font-weight: bold;
+margin-bottom: 30px;
+}
+
+.payment-form__item__field {
+margin-bottom: 10px;
+}
+
+.payment-form__item__button {
+margin-top: 10px;
+}
+
+.payment-form__item--total p {
+margin: 0;
+font-weight: bold;
+}
+
+.payment-form__item__success-message {
+color: green;
+margin-top: 10px;
+}
+.payment-form__item__total{
+    text-align: center;
+}
+.payment-form__item_payment-form_item--multisport-card{
+    text-align: center;
+}
+.zoom_element:hover {
+    -ms-transform: scale(1.08);
+    -webkit-transform: scale(1.08); 
+    transform: scale(1.08); 
 }

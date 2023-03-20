@@ -16,13 +16,15 @@
     <div class="row row-cols-1 row-cols-md-4 g-4" id="video-list">
         {{#each links}}
             <div class="col-md-4 center video-item">
-                <div class="card text-center">
+                <div class="card text-center zoom_element">
                     <div class="card-body">
-                        <p class="card-title text-uppercase text-center font-weight-bold"><a href="/links/view/{{ID}}">{{Title}}</a></p>
+                        <a href="/links/view/{{ID}}">
+                        <p class="card-title text-uppercase text-center font-weight-bold">{{Title}}</p>
                         <div>
                             <iframe class="embed-responsive-item" frameborder="0" width="100%" height="auto" src="{{Url}}" allowfullscreen></iframe>
                         </div>
                         <p>{{Description}}</p>
+                        </a>
                         <p>Качен на {{ formattedDate }}</p>
                         {{#if ../isAdmin}}
                             <div class="row mt-3">
@@ -48,3 +50,4 @@
         <div class="no-results-message hide">Няма намерени резултати</div>
     </div>
 </div>
+<script src="/js/searchbar.js"></script>
