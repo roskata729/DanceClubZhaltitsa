@@ -40,3 +40,19 @@ singlePayment.addEventListener('click', () => {
   });
 
 });
+
+const multiSportDiscountField = document.getElementById("multiSportDiscount");
+
+function updateMembershipCost() {
+  const isMultiSportCardUsed = document.getElementById("multi-sport-card").checked;
+  const membershipCost = document.getElementById("membership-cost");
+  const currentCost = parseFloat(membershipCost.innerText);
+  const multiSportDiscount = parseFloat(multiSportDiscountField.value);
+  
+  if (isMultiSportCardUsed) {
+    const discountedCost = Math.max(currentCost - (currentCost * multiSportDiscount / 100), 0);
+    membershipCost.innerText = `${discountedCost} лв`;
+  } else {
+    membershipCost.innerText = `${document.getElementById("membership_cost").value} лв`;
+  }
+}

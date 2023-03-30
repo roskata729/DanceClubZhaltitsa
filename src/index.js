@@ -49,6 +49,8 @@ app.use((req, res, next) => {
     app.locals.message = req.flash('message');
     app.locals.hooray = req.flash('hooray');
     app.locals.user = req.user;
+    app.locals.multiSportDiscount = 10;
+    app.locals.membershipCost = 50;
     next();
 });
 

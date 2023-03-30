@@ -56,7 +56,11 @@
             </div>
             <div class="payment-form__item__total row" style="margin-top: 50px;">
                 <button class="payment-form__item__button text-center col" type="submit">Потвърди поръчка</button>
-                <label for="monthly-total" class="col">Сума за плащане: 50 лв</label>
+                <label for="multi-sport-card" class="col">Използване на Мултиспорт карта:</label>
+                <input type="checkbox" id="multi-sport-card" name="multi-sport-card" onchange="updateMembershipCost()">
+                <input id="multiSportDiscount" type="hidden" value="{{multiSportDiscount}}">
+                <input id="membership_cost" type="hidden" value="{{membershipCost}}">
+                <label for="monthly-total" class="col">Сума за плащане: <span id="membership-cost">{{membershipCost}} лв</span></label>
             </div>
             </form>
         </div>
