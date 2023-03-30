@@ -3,8 +3,8 @@ const paymentCard = document.querySelector('.payment-form__item--monthly-card');
 const singlePayment = document.querySelector('.payment-form__item--single-training');
 
 // Get all the input elements inside the payment card
-const paymentCardElements = paymentCard.querySelectorAll('input, label, button, hr');
-const singlePaymentElements = singlePayment.querySelectorAll('input, label, button, select, hr');
+const paymentCardElements = paymentCard.querySelectorAll('input, label, button, hr, span');
+const singlePaymentElements = singlePayment.querySelectorAll('input, label, button, select, hr, span');
 
 // Hide all the input elements
 paymentCardElements.forEach(element => {
@@ -52,7 +52,11 @@ function updateMembershipCost() {
   if (isMultiSportCardUsed) {
     const discountedCost = Math.max(currentCost - (currentCost * multiSportDiscount / 100), 0);
     membershipCost.innerText = `${discountedCost} лв`;
+    membershipCost.classList.remove('text-danger');
+    membershipCost.classList.add('text-success');
   } else {
     membershipCost.innerText = `${document.getElementById("membership_cost").value} лв`;
-  }
+    membershipCost.classList.remove('text-success');
+    membershipCost.classList.add('text-danger');
+  }  
 }
