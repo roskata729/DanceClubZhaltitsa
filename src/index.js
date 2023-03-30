@@ -47,6 +47,7 @@ app.use(passport.session());
 app.use((req, res, next) => {
     app.locals.success = req.flash('success');
     app.locals.message = req.flash('message');
+    app.locals.hooray = req.flash('hooray');
     app.locals.user = req.user;
     next();
 });
@@ -56,6 +57,7 @@ app.use(require('./routes'));
 app.use(require('./routes/authentication'));
 app.use('/links', require('./routes/links'));
 app.use('/events', require('./routes/events'));
+app.use('/payments', require('./routes/payments'));
 
 /* Public */
 app.use(express.static(path.join(__dirname, 'public')));

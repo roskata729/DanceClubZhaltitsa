@@ -10,6 +10,9 @@
   "author": "Rostislav",
   "license": "ISC",
   "dependencies": {
+    "@fullcalendar/core": "^6.1.4",
+    "@fullcalendar/daygrid": "^6.1.4",
+    "@fullcalendar/timegrid": "^6.1.4",
     "@google-cloud/logging": "^10.3.3",
     "bcryptjs": "^2.4.3",
     "connect-flash": "^0.1.1",
@@ -21,6 +24,8 @@
     "express-validator": "^5.3.1",
     "form-data": "^4.0.0",
     "handlebars": "^4.7.7",
+    "handlebars-helpers": "^0.10.0",
+    "moment": "^2.29.4",
     "morgan": "^1.9.1",
     "mysql": "^2.16.0",
     "node-fetch": "^3.3.1",

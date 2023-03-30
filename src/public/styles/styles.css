@@ -172,8 +172,8 @@ background-color: #2E8B57;
 
 .payment-form {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-gap: 20px;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 40px;
   }
 
   .payment-form__item {
@@ -228,7 +228,7 @@ margin-top: 10px;
     text-align: center;
 }
 .zoom_element:hover {
-    -ms-transform: scale(1.08);
-    -webkit-transform: scale(1.08); 
-    transform: scale(1.08); 
+    -ms-transform: scale(1.05);
+    -webkit-transform: scale(1.05); 
+    transform: scale(1.05); 
 }

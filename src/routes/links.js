@@ -17,7 +17,7 @@ router.post('/add', isAdministrator, async (req, res) => {
         Description
     };
     await pool.query('INSERT INTO links SET ?', [newLink]);
-    req.flash('success', 'Видеото беше добавено успешно');
+    req.flash('hooray', 'Видеото беше добавено успешно');
     res.redirect('/links');
 });
 
@@ -36,7 +36,7 @@ res.render('links/view', { link: link[0], isAdmin: req.user.is_admin });
 router.get('/delete/:ID', isAdministrator, async(req, res) => {
     const { ID } = req.params;
     await pool.query('DELETE FROM links WHERE ID = ?', [ID]);
-    req.flash('success', 'Видеото беше премахнато успешно');
+    req.flash('hooray', 'Видеото беше премахнато успешно');
     res.redirect('/links');
 });
 
@@ -55,7 +55,7 @@ router.post('/edit/:ID', isAdministrator, async(req, res) => {
         Url
     };
     await pool.query('UPDATE links SET ? WHERE ID = ?', [editedLink, ID]);
-    req.flash('success', 'Видеото беше обновено успешно');
+    req.flash('hooray', 'Видеото беше обновено успешно');
     res.redirect('/links');
 });
 

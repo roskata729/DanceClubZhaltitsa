@@ -15,7 +15,7 @@ passport.use('local.signin', new LocalStrategy({
         const ValidPassword = await helpers.matchPassword(password, localUser.password);
         if (ValidPassword) {
             //await helpers.saveTrainingsInDatabase();
-            done(null, localUser, req.flash('success', 'Добре дошли  ' + localUser.username));
+            done(null, localUser, req.flash('hooray', 'Добре дошли  ' + localUser.username));
         } else {
             done(null, false, req.flash('message', 'Грешна парола'));
         }

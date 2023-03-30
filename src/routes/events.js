@@ -38,7 +38,7 @@ router.post('/add', isAdministrator, async (req, res) => {
         Description
     };
     await pool.query('INSERT INTO events SET ?', [newEvent]);
-    req.flash('success', 'Събитието беше добавено успешно');
+    req.flash('hooray', 'Събитието беше добавено успешно');
     res.redirect('/events');
 });
 
@@ -70,7 +70,7 @@ router.post('/edit/:ID', isLoggedIn, async (req, res) => {
   };
 
   await pool.query('UPDATE events SET ? WHERE ID = ?', [editedEvent, ID]);
-  req.flash('success', 'Събитието беше обновено успешно');
+  req.flash('hooray', 'Събитието беше обновено успешно');
   res.redirect('/events');
 });
 
@@ -100,7 +100,7 @@ router.post('/registerToEvent/:ID', isLoggedIn, async(req, res) => {
 
     await pool.query('UPDATE events SET participants = ? WHERE ID = ?', [updatedParticipants, ID]);
 
-    req.flash('success', 'Успешно регистрация!');
+    req.flash('hooray', 'Успешно регистрация!');
     res.redirect(`/events`);
   });
 
@@ -108,7 +108,7 @@ router.post('/signOff/:eventId', isLoggedIn, async (req, res) => {
   const eventId = req.params.eventId;
   const userId = req.user.id;
   await helpers.removeParticipant(eventId, userId);
-  req.flash('success', 'Успешно отписване от събитието!');
+  req.flash('hooray', 'Успешно отписване от събитието!');
   res.redirect('/events');
 });
 
