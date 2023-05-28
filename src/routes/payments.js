@@ -13,9 +13,14 @@ router.get('/', isLoggedIn, async (req, res) => {
   });
   
 router.post('/add', isLoggedIn, async (req, res) => {
-    const { training_date_id } = req.body;
-    const [training] = await pool.query('SELECT paid_by FROM trainings WHERE id = ?', [training_date_id]);
-    const paidByArray = JSON.parse(training.paid_by || '[]');
+    //const { training_date_id } = req.body;
+    const selectedTrainingDate = req.body.training_date;
+    const trainingDate = new Date(selectedTrainingDate);
+    trainingDate.setDate(trainingDate.getDate() + 1);
+    const trainingDateISOString = trainingDate.toISOString().slice(0, 10);
+
+    const [training] = await pool.query('SELECT paid_by FROM trainings WHERE date = ?', [trainingDateISOString]);
+    const paidByArray = training ? JSON.parse(training.paid_by || '[]') : [];
     if(paidByArray.includes(req.user.id)){
         req.flash('message', 'Вече сте платили за тази тренировка');
         return res.redirect('/payments');
@@ -24,7 +29,7 @@ router.post('/add', isLoggedIn, async (req, res) => {
     const updatedTraining = {
         paid_by: JSON.stringify(paidByArray)
     };
-    await pool.query('UPDATE trainings SET ? WHERE id = ?', [updatedTraining, training_date_id]);
+    await pool.query('UPDATE trainings SET ? WHERE date = ?', [updatedTraining, trainingDateISOString]);
     req.flash('hooray', 'Плащането беше отразено успешно');
     res.redirect('/payments');
 });
@@ -41,7 +46,7 @@ router.post('/membership', isLoggedIn, async (req, res) => {
       const userId = req.user.id;
       const group_id = req.user.user_age < 18 ? 1 : 2;
 
-      const [trainings] = await pool.query('SELECT id, paid_by FROM trainings WHERE date >= ? AND date <= ? AND group_id = ?', [startDateString, endDateString, group_id]);
+      const trainings = await pool.query('SELECT id, paid_by FROM trainings WHERE date >= ? AND date <= ? AND group_id = ?', [startDateString, endDateString, group_id]);
       const trainingsArr = Array.isArray(trainings) ? trainings : [trainings];
 
       for (const training of trainingsArr) {

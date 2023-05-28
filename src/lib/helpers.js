@@ -54,10 +54,11 @@ helpers.getFutureDates = async () => {
 
 helpers.saveTrainingsInDatabase = async () => {
     // Generate training dates for the past 6 months
-    const end = new Date(); // end at today
-    const start = new Date(end.getFullYear(), end.getMonth() - 6, 1); // start 6 months ago (on the 1st day of the month)
-    const group1Days = [2, 5]; // Group 1 trainings on Monday and Thursday (0 = Sunday, 1 = Monday, etc.)
-    const group2Days = [3, 6]; // Group 2 trainings on Tuesday and Friday
+    const start = new Date(); // start 6 months ago (on the 1st day of the month)
+    const end = new Date(start.getFullYear(), start.getMonth() + 6, 1); // end at today
+
+    const group1Days = [1, 4]; // Group 1 trainings on Monday and Thursday (0 = Sunday, 1 = Monday, etc.)
+    const group2Days = [2, 5]; // Group 2 trainings on Tuesday and Friday
     const trainingDates = [];
   
     for (let d = start; d <= end; d.setDate(d.getDate() + 1)) {

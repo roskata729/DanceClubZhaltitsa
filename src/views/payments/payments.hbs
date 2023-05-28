@@ -7,11 +7,10 @@
                 <div class="payment-form__item__field row">
                     <label for="training_date" class="col">Training Date:</label>
                     <select id="training_date" name="training_date" class="col form-control">
-                        {{#each futureDates}}
-                            <option value="{{this.date}}">{{moment this.date "DD / MM / YYYY"}}</option>
-                            <input id="training_date_id" name="training_date_id" type="hidden" value="{{this.id}}" />
-                        {{/each}}
-                    </select>
+                    {{#each futureDates}}
+                      <option value="{{this.date}}">{{moment this.date "DD / MM / YYYY"}}</option>
+                    {{/each}}
+                  </select>
                 </div>
                 <div class="payment-form__item__field row">
                     <label for="cardholder-name" class="col">Име на картодържателя:</label>
