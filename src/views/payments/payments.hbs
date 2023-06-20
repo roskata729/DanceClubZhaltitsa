@@ -5,7 +5,7 @@
                 <hr>
                 <form action="/payments/add" method="POST">
                 <div class="payment-form__item__field row">
-                    <label for="training_date" class="col">Training Date:</label>
+                    <label for="training_date" class="col">Дата на занятие:</label>
                     <select id="training_date" name="training_date" class="col form-control">
                     {{#each futureDates}}
                       <option value="{{this.date}}">{{moment this.date "DD / MM / YYYY"}}</option>

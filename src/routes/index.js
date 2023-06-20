@@ -85,7 +85,7 @@ router.post('/trainings/addparticipant/:ID', isAdministrator, async (req, res) =
   const participantsIdsArray = JSON.parse(training.participants_ids || '[]');
 
   if(participantsIdsArray.includes(participant_id)){
-    req.flash('message', 'Този клиент вече присъства. Моля изберете друг!');
+    req.flash('message', 'Този танцьор вече фигурира в списъка. Моля изберете друг!');
     return res.redirect('/schedule');
   }
   participantsIdsArray.push(participant_id);
@@ -95,7 +95,7 @@ router.post('/trainings/addparticipant/:ID', isAdministrator, async (req, res) =
   };
 
   await pool.query('UPDATE trainings SET ? WHERE ID = ?', [updatedTraining, ID]);
-  req.flash('success', 'Присъствието беше отразено успешно');
+  req.flash('hooray', 'Присъствието беше отразено успешно');
   res.redirect('/schedule');
 });
 
