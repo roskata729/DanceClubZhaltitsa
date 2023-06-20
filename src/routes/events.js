@@ -112,4 +112,11 @@ router.post('/signOff/:eventId', isLoggedIn, async (req, res) => {
   res.redirect('/events');
 });
 
+router.get('/delete/:ID', isAdministrator, async(req, res) => {
+  const { ID } = req.params;
+  await pool.query('DELETE FROM events WHERE ID = ?', [ID]);
+  req.flash('hooray', 'Събитието беше премахнато успешно');
+  res.redirect('/events');
+});
+
 module.exports = router;
