@@ -35,7 +35,12 @@
                         <button class="btn btn-primary btn-block add-participant-button">
                           Добави присъстващ
                         </button>
-
+                        <form action="/schedule/edit/{{id}}" method="GET">
+                          <button class="btn btn-primary btn-block">
+                            Промени
+                          </button>
+                        </form>
+                        
                         <div id="add-participant-popup" class="popup-form" style="display: none;">
                           <h3>Добави присъстващ</h3>
                           <form action="/trainings/addparticipant/{{id}}" method="POST">

@@ -99,6 +99,31 @@ router.post('/trainings/addparticipant/:ID', isAdministrator, async (req, res) =
   res.redirect('/schedule');
 });
 
+router.get('/schedule/edit/:ID', isLoggedIn, async(req, res) => {
+  const { ID } = req.params;
+  const training = await pool.query('SELECT * FROM trainings WHERE ID = ?', [ID]);
+
+  if (training && training.length > 0) {
+      training[0].participantsArray = JSON.parse(training[0].participants_ids || "[]"); 
+      training[0].paidByArray = JSON.parse(training[0].paid_by || "[]");
+      training[0].formattedDate = training[0].date.toISOString().slice(0,10);
+
+      res.render('editTraining', {training: training[0]});
+  } else {
+      req.flash('message', 'Нещо се обърка при зареждането на тренировката.')
+      res.redirect('/schedule');
+  }
+});
+
+router.post('/schedule/edit/:ID', isLoggedIn, async (req, res) => {
+  const { ID } = req.params;
+  const { group_id, date } = req.body;
+
+  await pool.query('UPDATE trainings SET group_id=?, date=? WHERE ID = ?', [group_id, date, ID]);
+  req.flash('hooray', 'Тренировката беше обновена успешно');
+  res.redirect('/schedule');
+});
+
 function getWeekNumber(date) {
     const firstDayOfYear = new Date(date.getFullYear(), 0, 1);
     const daysSinceFirstDayOfYear = (date - firstDayOfYear) / (1000 * 60 * 60 * 24);

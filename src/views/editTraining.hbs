@@ -1,0 +1,67 @@
+<div class="container p-2">
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+            <div class="card">
+                <div class="card-body">
+                    <form action="/schedule/edit/{{training.id}}" method="POST">
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <td>ID на тренировката:</td>
+                                    <td>
+                                        <div class="form-group">
+                                            {{training.id}}
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>ID на групата:</td>
+                                    <td>
+                                        <div class="form-group">
+                                            <input class="form-control" name="group_id" rows="2"
+                                                placeholder="{{training.group_id}}" value="{{training.group_id}}"></input>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Дата:</td>
+                                    <td>
+                                        <div class="form-group">
+                                            <input type="date" id="date" class="form-control" name="date" placeholder="date" value="{{training.formattedDate}}" min="{{training.formattedDate}}">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Присъствали танцьори:</td>
+                                    <td>
+                                        {{#each training.participantsArray}}
+                                            {{this}}
+                                        {{else}}
+                                            Няма отчетени присъствали танцьори за тази тренировка
+                                        {{/each}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Заплатили танцьори:</td>
+                                    <td>
+                                        {{#each training.paidByArray}}
+                                            {{this}}
+                                        {{else}}
+                                            Няма заплатили танцьори за тази тренировка
+                                        {{/each}}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <hr>
+                        <div class="form-group pt-3 mb-0">
+                            <button class="btn btn-success btn-block">
+                                Запази
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
