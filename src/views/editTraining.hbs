@@ -1,6 +1,6 @@
 <div class="container p-2">
     <div class="row">
-        <div class="col-md-8 mx-auto">
+        <div class="col-md-4 mx-auto">
             <div class="card">
                 <div class="card-body">
                     <form action="/schedule/edit/{{training.id}}" method="POST">
@@ -54,12 +54,24 @@
                             </tbody>
                         </table>
                         <hr>
-                        <div class="form-group pt-3 mb-0">
-                            <button class="btn btn-success btn-block">
+                        <div class="form-group pt-3 mb-0 row">
+                            <button class="btn btn-success btn-block col">
                                 Запази
                             </button>
-                        </div>
+                        
                     </form>
+                        {{!-- <div class="form-group mt-3 mb-0 row"> --}}
+                        <form action="/schedule/delete/{{training.id}}" method="POST">
+                            <button class="btn btn-danger btn-block col">
+                                Изтрий
+                            </button>
+                        </form>
+                        <form action="/schedule" method="GET">
+                            <button class="btn btn-dark btn-block col">
+                                Назад
+                            </button>
+                        </form>
+                        </div>
                 </div>
             </div>
         </div>

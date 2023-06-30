@@ -124,6 +124,29 @@ router.post('/schedule/edit/:ID', isLoggedIn, async (req, res) => {
   res.redirect('/schedule');
 });
 
+router.post('/schedule/delete/:ID', isAdministrator, async(req, res) => {
+  const { ID } = req.params;
+  await pool.query('DELETE FROM trainings WHERE ID = ?', [ID]);
+  req.flash('hooray', 'Тренировката беше премахната успешно');
+  res.redirect('/schedule');
+});
+
+router.get('/schedule/add', isAdministrator, async (req, res) => {
+  const futureDates = await helpers.getFutureDates();
+  res.render('addTraining', { futureDates });
+});
+
+router.post('/schedule/add', isAdministrator, async (req, res) => {
+  const { group_id, date } = req.body;
+  const newTraining = {
+    group_id: group_id,
+    date
+  };
+  await pool.query('INSERT INTO trainings SET ?', [newTraining]);
+  req.flash('hooray', 'Тренировката беше добавено успешно');
+  res.redirect('/schedule');
+});
+
 function getWeekNumber(date) {
     const firstDayOfYear = new Date(date.getFullYear(), 0, 1);
     const daysSinceFirstDayOfYear = (date - firstDayOfYear) / (1000 * 60 * 60 * 24);

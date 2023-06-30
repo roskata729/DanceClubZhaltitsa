@@ -11,8 +11,14 @@
                 <li class="nav-item">
                     <a href="/payments" class="nav-link">Плащания</a>
                 </li>
-                <li class="nav-item">
-                    <a href="/schedule" class="nav-link">График</a>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"
+                        aria-haspopup="true" aria-expanded="false">График</a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="/schedule">Виж график</a>
+                        {{#if user.is_admin}}<div role="separator" class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="/schedule/add">Добави тренировка</a>{{/if}}
+                    </div>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"
