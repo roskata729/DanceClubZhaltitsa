@@ -30,7 +30,7 @@ router.get('/', isLoggedIn, async (req, res) => {
 router.get('/view/:ID', isLoggedIn, async (req, res) => {
 const { ID } = req.params;
 const link = await pool.query('SELECT *, DATE_FORMAT(Created_At, "%Y-%m-%d %H:%i:%s") as formattedDate FROM links WHERE ID = ?', [ID]);
-res.render('links/view', { link: link[0], isAdmin: req.user.is_admin });
+res.render('links/view', { link: link[0], isAdmin: req.user.is_admin, ID: ID });
 });
 
 router.get('/delete/:ID', isAdministrator, async(req, res) => {
